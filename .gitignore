@@ -1,0 +1,18 @@
+# .NET related
+bin/
+obj/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+*.log
+
+# Secrets
+appsettings.*.json
+!appsettings.json
+    
