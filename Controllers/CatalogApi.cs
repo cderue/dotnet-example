@@ -1,23 +1,12 @@
-```csharp
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-public static class CatalogApi
+public static class CatalogController
 {
-    public static void MapCatalogApiV1(this IEndpointRouteBuilder routes)
+    public static void MapCatalogApiV1(IEndpointRouteBuilder app)
     {
-        routes.MapGet("/api/catalog/items", async (HttpContext context) =>
+        app.MapGet("/api/catalog/items", async (int pageSize = 10, int pageIndex = 0, string apiVersion) =>
         {
-            var pageSize = context.Request.Query.ContainsKey("PageSize") 
-                ? int.Parse(context.Request.Query["PageSize"]) 
-                : 10;
-
-            var pageIndex = context.Request.Query.ContainsKey("PageIndex") 
-                ? int.Parse(context.Request.Query["PageIndex"]) 
-                : 0;
-
-            var apiVersion = context.Request.Query["api-version"].ToString();
-
             // Placeholder response
             var response = new
             {
@@ -46,7 +35,9 @@ public static class CatalogApi
             };
 
             return Results.Ok(response);
-        });
+        })
+        .WithName("ListItems")
+        .Produces(200)
+        .ProducesProblem(400);
     }
 }
-```
